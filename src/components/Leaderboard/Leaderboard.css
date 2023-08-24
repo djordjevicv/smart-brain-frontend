@@ -1,0 +1,43 @@
+#Leaderboard{
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    background: linear-gradient(89deg, #FF5EDF 0%, #04C8DE 100%);
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+#Overlay{
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    position: fixed;
+    background: rgba(0, 0, 0, .6);
+}
+
+#exitModule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    color: white;
+    background: rgb(197, 57, 57);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: all 0.01s;
+    cursor: pointer;
+}
+
+#exitModule:hover {
+    scale: 0.9;
+    opacity: 0.6;
+}
