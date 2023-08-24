@@ -178,7 +178,7 @@ class App extends Component {
           ?
             <div>
               <Rank
-                name={this.state.user.name}
+                name={'this.state.user.name'}
                 entries={this.state.user.entries}
               />
               <LeaderBoard changeOpen={this.changeOpen}
