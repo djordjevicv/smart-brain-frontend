@@ -12,11 +12,6 @@ import FormComponent from './components/FormComponent/FormComponent';
 import './App.css';
 import LeaderBoard from './components/Leaderboard/Leaderboard';
 
-//You must add your own API key here from Clarifai.
-// const app = new Clarifai.App({
-//   apiKey: 'ef9a269a7b0a4d2aaf30c54daf3acd68'
-// });
-
 const initialState = {
   input: '',
   imageUrl: '',
@@ -158,25 +153,6 @@ class App extends Component {
           }
         })
       .catch(console.log);
-        
-      
-    // app.models.predict('face-detection', this.state.input)
-    //   .then(response => {
-    //     if (response) {
-    //       fetch('http://localhost:3001/image', {
-    //         method: 'put',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify({
-    //           id: this.state.user.id
-    //         })
-    //       })
-    //         .then(response => response.json())
-    //         .then(count => this.setState(Object.assign(this.state.user, { entries: count })))
-    //         .catch(console.log)
-    //       this.displayFaceBox(this.calculateFaceLocation(response));
-    //     }
-    //   })
-    //   .catch(console.log);
   }
 
 
