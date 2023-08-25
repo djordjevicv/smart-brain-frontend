@@ -30,7 +30,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
         getTopFive();
     }, [isModalOpen]);
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < topFive.length; i++) {
             arrayOfRows.push(<LeaderboardRow Rank={i + 1}
                 Name={topFive[i].name}
                 Entries={topFive[i].entries}
