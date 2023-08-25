@@ -31,7 +31,7 @@ class FormComponent extends React.Component{
 
     onSubmit = (route) => {
         if (route === 'signin') { // SIGN IN
-            fetch('http://localhost:3001/signin', {
+            fetch('https://smartbrain-backend-jbvx.onrender.com/signin', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -46,7 +46,7 @@ class FormComponent extends React.Component{
                 });
         }
         else { // REGISTER
-            fetch('http://localhost:3001/register', { 
+            fetch('https://smartbrain-backend-jbvx.onrender.com/register', { 
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

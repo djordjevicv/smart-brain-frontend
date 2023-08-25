@@ -7,17 +7,6 @@ import LeaderboardRow from './LeaderboardRow/LeaderboardRow';
 // Server returns an array of objects, sorted by entry count.
 // Object consists of Rank, Name and Entry-count.
 
-async function topFive() {
-    const arrayOfRows = [];
-    const response = await fetch('http://localhost:3001/leaderboard', {
-        method: "get",
-        headers: { 'Content-Type': 'application/json' },
-    });
-    const users = await response.json();
-    return users;   
-}
-
-
 const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
     
     let arrayOfData = [];
@@ -25,7 +14,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
 
     const getTopFive = () => {
         const usersArray = [];
-        fetch('http://localhost:3001/leaderboard', {
+        fetch('https://smartbrain-backend-jbvx.onrender.com/leaderboard', {
             method: "get",
             headers: { 'Content-Type': 'application/json' },
         })
