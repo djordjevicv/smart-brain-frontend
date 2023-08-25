@@ -44,7 +44,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
                 createPortal(
                     <div>
                         <div id='Overlay'></div>
-                        <div id='Leaderboard' className='relative shadow-2 flex flex-column'>
+                        <div id='Leaderboard' className='relative shadow-2 flex flex-column pt2'>
                             <div id="exitModule" className='absolute'
                                 onClick={changeOpen}>X</div>
                             <div id='LeaderboardHeading' className='f4 f3-ns b mh3 mt3 mb2 center'>Leaderboard</div>
