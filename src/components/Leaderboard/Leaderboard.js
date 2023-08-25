@@ -47,7 +47,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
                         <div id='Leaderboard' className='relative shadow-2 flex flex-column'>
                             <div id="exitModule" className='absolute'
                                 onClick={changeOpen}>X</div>
-                            <div id='LeaderboardHeading' className='f4 f3-ns b mh3 mt3 mb2 cenetr'>Leaderboard</div>
+                            <div id='LeaderboardHeading' className='f4 f3-ns b mh3 mt3 mb2 center'>Leaderboard</div>
                             <div id='LeaderboardData' className='flex flex-column justify-around items-center mb4'>
                                 <LeaderboardRow Rank={`Rank`} Name={`Name`} Entries={`Entries`} />
                                 {arrayOfRows}
