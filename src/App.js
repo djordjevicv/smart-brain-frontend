@@ -58,6 +58,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.setState(initialState);
     if (localStorage.getItem('userJSON') !== '') {
       const currentUser = JSON.parse(localStorage.getItem('userJSON'));
       this.setState({ user: currentUser });
