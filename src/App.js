@@ -59,8 +59,11 @@ class App extends Component {
 
   componentDidMount() {
     this.setState(initialState);
+
+    if (localStorage.getItem('userJSON') === null)
+      localStorage.setItem('userJSON', '');
+    
     if (localStorage.getItem('userJSON') !== '') {
-      console.log(localStorage.getItem('userJSON'));
       const currentUser = JSON.parse(localStorage.getItem('userJSON'));
       this.setState({ user: currentUser });
       this.onRouteChange('home');
