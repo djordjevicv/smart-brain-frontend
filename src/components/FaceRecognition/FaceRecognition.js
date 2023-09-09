@@ -1,9 +1,12 @@
 import React from 'react';
+import { useEffect } from 'react';
 import './FaceRecognition.css';
 
-const FaceRecognition = ({ imageUrl, box }) => {
+const FaceRecognition = ({ imageUrl, box, imageReference }) => {
+
   const imageWidth = imageUrl === '' ? `` : 280;
   const imageHeight = imageUrl === '' ? `` : 230;
+
   return (
     <div className='center ma shadow-2 mt4'
       style={{
@@ -18,6 +21,7 @@ const FaceRecognition = ({ imageUrl, box }) => {
           fontSize: "15px"
         }}>
         <img id='inputImage' alt='' src={imageUrl}
+          ref={imageReference}
           style={{
             maxWidth: "100%",
             maxHeight: "100%"

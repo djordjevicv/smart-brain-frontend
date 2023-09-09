@@ -6,6 +6,7 @@ import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
+import PictureScanner from './components/PictureScanner/PictureScanner';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FormComponent from './components/FormComponent/FormComponent';
@@ -13,9 +14,6 @@ import './App.css';
 import LeaderBoard from './components/Leaderboard/Leaderboard';
 
 const initialState = {
-  input: '',
-  imageUrl: '',
-  box: {},
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -26,36 +24,15 @@ const initialState = {
     joined: ''
   },
   isModalOpen: false,
-  topFive: [
-    {
-      name: '',
-      entries: ''
-    },
-    {
-      name: '',
-      entries: ''
-    },
-    {
-      name: '',
-      entries: ''
-    },
-    {
-      name: '',
-      entries: ''
-    },
-    {
-      name: '',
-      entries: ''
-    },
-
-  ]
 }
 class App extends Component {
 
+  
   constructor() {
     super();
     this.state = initialState;
   }
+
 
   componentDidMount() {
     this.setState(initialState);
@@ -70,6 +47,13 @@ class App extends Component {
     }
   }
 
+
+  updateUserCount = (count) => {
+    this.setState(Object.assign(this.state.user, { entries: count }));
+    return this.state.user;
+  }
+
+
   loadUser = (data) => {
     this.setState({
       user: {
@@ -83,81 +67,9 @@ class App extends Component {
   }
 
 
-  populateTopFive = (arrayOfData) => {
-    this.setState({ topFive: arrayOfData });
-  }
-
-
-  calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.querySelector('#inputImage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
-    }
-  }
-
-
-  displayFaceBox = (box) => {
-    this.setState({ box: box });
-    
-  }
-
-
-  onInputChange = (event) => {
-    this.setState({input: event.target.value});
-  }
-
-
   changeOpen = () => {
-    if (this.state.isModalOpen === false)
-      this.setState({ isModalOpen: true });
-    else 
-      this.setState({ isModalOpen: false });
-  }
-
-
-  refreshHome = () => {
-    location.reload();
-  }
-
-
-  onButtonSubmit = () => {
-    this.setState({imageUrl: this.state.input});
-
-    fetch('https://smartbrain-backend-jbvx.onrender.com/imageURL', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        input: this.state.input
-      })
-    })
-      .then(response => response.json())
-        .then(response => {
-          if (response) {
-            fetch('https://smartbrain-backend-jbvx.onrender.com/image', {
-              method: 'put',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                id: this.state.user.id
-              })
-            })
-              .then(response => response.json())
-              .then(count => {
-                this.setState(Object.assign(this.state.user, { entries: count }));
-                const userJSON = JSON.stringify(this.state.user);
-                localStorage.setItem('userJSON', userJSON);
-
-              })
-              .catch(console.log)
-            this.displayFaceBox(this.calculateFaceLocation(response));
-          }
-        })
-      .catch(console.log);
+    return !this.state.isModalOpen ? this.setState({ isModalOpen: true })
+      : this.setState({ isModalOpen: false });
   }
 
 
@@ -188,14 +100,10 @@ class App extends Component {
               />
               <LeaderBoard changeOpen={this.changeOpen}
                 isModalOpen={this.state.isModalOpen}
-                populateTopFive={this.populateTopFive}
-                topFive={this.state.topFive } />
-              <ImageLinkForm
-                onInputChange={this.onInputChange}
-                onButtonSubmit={this.onButtonSubmit}
               />
-              <FaceRecognition box={box}
-                imageUrl={imageUrl} />
+              <PictureScanner updateUserCount={this.updateUserCount} 
+                user={this.state.user}
+              />
             </div>
           :
             <FormComponent loadUser={this.loadUser}

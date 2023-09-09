@@ -20,7 +20,8 @@ const Navigation = ({ onRouteChange, isSignedIn, changeOpen}) => {
           </div>
         </nav>
       );
-    } else {
+    }
+    else {
       return (
         <nav className='flex justify-between items-center'>
           <Logo />

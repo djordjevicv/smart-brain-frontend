@@ -4,40 +4,25 @@ import { useEffect } from 'react';
 import { useState } from "react";
 import './Leaderboard.css'
 import LeaderboardRow from './LeaderboardRow/LeaderboardRow';
-// Server returns an array of objects, sorted by entry count.
-// Object consists of Rank, Name and Entry-count.
 
-const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
-    
-    let arrayOfData = [];
-    const arrayOfRows = [];
+const LeaderBoard = ({ isModalOpen, changeOpen }) => {
 
-    const getTopFive = () => {
-        const usersArray = [];
+    const [bestFive, setBestFive] = useState([]);
+
+    const getBestFive = () => {
         fetch('https://smartbrain-backend-jbvx.onrender.com/leaderboard', {
             method: "get",
             headers: { 'Content-Type': 'application/json' },
         })
             .then(response => response.json())
             .then(data => {
-                if (data) {
-                    populateTopFive(data);
-                }
+                if (data) setBestFive(data);
             });
     }
 
-    useEffect(() => {
-        getTopFive();
-    }, [isModalOpen]);
+    useEffect(getBestFive, [isModalOpen]);
 
-        for (let i = 0; i < topFive.length; i++) {
-            arrayOfRows.push(<LeaderboardRow Rank={i + 1}
-                Name={topFive[i].name}
-                Entries={topFive[i].entries}
-                key={i} />)
-        }
-
-    if (isModalOpen === false) return null;
+    if (!isModalOpen) return null;
     return (
         <div>
             {
@@ -50,7 +35,13 @@ const LeaderBoard = ({ isModalOpen, changeOpen, populateTopFive, topFive }) => {
                             <div id='LeaderboardHeading' className='f4 f3-ns b mh3 mt3 mb2 center'>Leaderboard</div>
                             <div id='LeaderboardData' className='flex flex-column justify-around items-center mb4'>
                                 <LeaderboardRow Rank={`Rank`} Name={`Name`} Entries={`Entries`} />
-                                {arrayOfRows}
+                                {
+                                    bestFive.map((user, i) => {
+                                      return <LeaderboardRow Rank={i + 1}
+                                                Name={bestFive[i].name}
+                                                Entries={bestFive[i].entries}
+                                                key={i} />
+                                })}
                             </div>
                         </div>
                     </div>,

@@ -4,7 +4,7 @@ import brain from './brain.png';
 import './Logo.css';
 
 
-const Logo = ({ refreshHome }) => {
+const Logo = () => {
   return (
     <div className='pa2'>
       <Tilt className="Tilt br2 shadow-2"
