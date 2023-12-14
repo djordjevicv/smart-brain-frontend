@@ -7,4 +7,4 @@
 
 [Test the app here](https://smartbrain-aspy.onrender.com/) 👈🏻
 
-## [Back-end code](https://github.com/djordjevicv/smart-brain-backend//)
+## [Back-end code](https://github.com/djordjevicv/smart-brain-backend//) 👈🏻
