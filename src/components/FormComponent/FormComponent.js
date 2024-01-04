@@ -1,70 +1,65 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class FormComponent extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            formEmail: '',
-            formPassword: '',
-            formName: ''
-        }
+
+function FormComponent({ onRouteChange, route, loadUser}) {
+    const [formEmail, setFormEmail] = useState('');
+    const [formPassword, setFormPassword] = useState('');
+    const [formName, setFormName] = useState('');
+
+    const onEmailChange = (event) => {
+        setFormEmail(event.target.value);
     }
 
-    onEmailChange = (event) => {
-        this.setState({ formEmail: event.target.value });
+    const onPasswordChange = (event) => {
+       setFormPassword(event.target.value);
     }
 
-    onPasswordChange = (event) => {
-        this.setState({ formPassword: event.target.value });
+    const onNameChange = (event) => {
+        setFormName(event.target.value);
     }
 
-    onNameChange = (event) => {
-        this.setState({ formName: event.target.value });
-    }
-
-    goToHomePage = (user) => {
-        this.props.loadUser(user)
-        this.props.onRouteChange('home');
+    const goToHomePage = (user) => {
+        loadUser(user)
+        onRouteChange('home');
         const userJSON = JSON.stringify(user);
         localStorage.setItem('userJSON', userJSON);
     }
 
-    onSubmit = (route) => {
+    const onSubmit = (route) => {
         if (route === 'signin') { // SIGN IN
-            fetch('https://smartbrain-backend-jbvx.onrender.com/signin', {
+            fetch('http://localhost:3001/signin', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    email: this.state.formEmail,
-                    password: this.state.formPassword
+                    email: formEmail,
+                    password: formPassword
                 })
             })
                 .then(response => response.json())
                 .then(user => {
-                    if (user.id) this.goToHomePage(user);
-                    else alert('Invalid form submission!');
+                    if (user.id)
+                        goToHomePage(user);
+                    else
+                        alert('Invalid form submission!');
                 });
         }
         else { // REGISTER
-            console.log("Im lost at this point")
-            fetch('https://smartbrain-backend-jbvx.onrender.com/register', { 
+            fetch('http://localhost:3001/register', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    email: this.state.formEmail,
-                    password: this.state.formPassword,
-                    name: this.state.formName
+                    email: formEmail,
+                    password: formPassword,
+                    name: formName
                 })
             })
                 .then(response => response.json())
                 .then(user => {
-                    if (typeof (user) === 'object') this.goToHomePage(user);
+                    if (typeof (user) === 'object') goToHomePage(user);
                     else alert('Invalid form submission!');
                 })
         }
     }
-    render() {
-        const { onRouteChange, route } = this.props;
         return (
             <article className="br3 ba b--black-10 mv4 mw6 shadow-5 center"
                 style={{
@@ -74,7 +69,7 @@ class FormComponent extends React.Component{
                     <div className="measure">
                         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                             {
-                                route !== 'signin' ? 
+                                route !== 'signin' ?
                                     <>
                                         <legend className="f1 fw6 ph0 mh0">Register</legend>
                                         <div className="mt3">
@@ -84,10 +79,10 @@ class FormComponent extends React.Component{
                                                 type="text"
                                                 name="name"
                                                 id="name"
-                                                onChange={this.onNameChange}
+                                                onChange={onNameChange}
                                             />
                                         </div>
-                                    </> 
+                                    </>
                                     :
                                     <>
                                         <legend className="f1 fw6 ph0 mh0">Sign In</legend>
@@ -100,7 +95,7 @@ class FormComponent extends React.Component{
                                     type="email"
                                     name="email-address"
                                     id="email-address"
-                                    onChange={this.onEmailChange}
+                                    onChange={onEmailChange}
                                 />
                             </div>
                             <div className="mv3">
@@ -110,7 +105,7 @@ class FormComponent extends React.Component{
                                     type="password"
                                     name="password"
                                     id="password"
-                                    onChange={this.onPasswordChange}
+                                    onChange={onPasswordChange}
                                 />
                             </div>
                         </fieldset>
@@ -118,7 +113,7 @@ class FormComponent extends React.Component{
                             {
                                 route !== 'signin' ?
                                     <input
-                                        onClick={() => this.onSubmit(this.props.route)}
+                                        onClick={() => onSubmit(route)}
                                         className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                                         type="submit"
                                         value="Register"
@@ -126,7 +121,7 @@ class FormComponent extends React.Component{
                                     :
                                     <>
                                         <input
-                                            onClick={() => this.onSubmit(this.props.route)}
+                                            onClick={() => onSubmit(route)}
                                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                                             type="submit"
                                             value="Sign In"
@@ -134,15 +129,14 @@ class FormComponent extends React.Component{
                                         <div className="lh-copy mt3">
                                             <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
                                         </div>
-                                    </>            
+                                    </>
                             }
-                            
+
                         </div>
                     </div>
                 </main>
             </article>
         );
-    }
 }
 
 export default FormComponent;

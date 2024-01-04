@@ -10,7 +10,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen }) => {
     const [bestFive, setBestFive] = useState([]);
 
     const getBestFive = () => {
-        fetch('https://smartbrain-backend-jbvx.onrender.com/leaderboard', {
+        fetch('http://localhost:3001/leaderboard', {
             method: "get",
             headers: { 'Content-Type': 'application/json' },
         })
@@ -40,7 +40,7 @@ const LeaderBoard = ({ isModalOpen, changeOpen }) => {
                                       return <LeaderboardRow Rank={i + 1}
                                                 Name={bestFive[i].name}
                                                 Entries={bestFive[i].entries}
-                                                key={i} />
+                                                key={crypto.randomUUID()} />
                                 })}
                             </div>
                         </div>
