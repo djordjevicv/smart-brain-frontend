@@ -31,7 +31,7 @@ const PictureScanner = ({ user, updateUserCount }) => {
 
     const onButtonSubmit = () => {
         setImageUrl(input);
-        fetch('https://smartbrain-backend-jbvx.onrender.com/imageURL', {
+        fetch('http://localhost:3001/imageURL', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -46,7 +46,7 @@ const PictureScanner = ({ user, updateUserCount }) => {
                     setImageUrl('');
                 }
                 else if (typeof(response.outputs[0].data.regions[0].region_info.bounding_box) === 'object') {
-                    fetch('https://smartbrain-backend-jbvx.onrender.com/image', {
+                    fetch('http://localhost:3001/image', {
                         method: 'put',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
