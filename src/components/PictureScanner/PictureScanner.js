@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect, useRef } from "react";
 import ImageLinkForm from "../ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "../FaceRecognition/FaceRecognition";
+import homeContext from "../../utilities/homeContext";
 
-const PictureScanner = ({ user, updateUserCount }) => {
+const PictureScanner = () => {
+
+    const user = useContext(homeContext).user;
+    const updateUserCount = useContext(homeContext).updateUserCount;
 
     const imageReference = useRef(null);
 

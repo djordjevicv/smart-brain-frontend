@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Rank.css'
-const Rank = ({ name, entries }) => {
+import homeContext from '../../utilities/homeContext';
+const Rank = () => {
+  const name = useContext(homeContext).user.name;
+  const entries = useContext(homeContext).user.entries;
+
   return (
     <div className='Rank mb4 mt4'>
       <div className='white f4'>

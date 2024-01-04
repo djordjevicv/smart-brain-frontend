@@ -6,6 +6,7 @@ import { Home } from './components/Home/Home';
 import './App.css';
 import initialState from './utilities/initialState';
 import { useLocation, Routes, Route } from 'react-router-dom';
+import homeContext from './utilities/homeContext';
 
 function App() {
 
@@ -69,17 +70,15 @@ function App() {
                     changeOpen={changeOpen} />
                 {
                     route === 'home' ?
-                        <Home user={user}
-                            changeOpen={changeOpen}
-                            isModalOpen={isModalOpen}
-                            updateUserCount={updateUserCount}
-                        /> :
+                        <homeContext.Provider value={{user, changeOpen, isModalOpen, updateUserCount}}>
+                            <Home />
+                        </homeContext.Provider> :
+
                         <FormComponent loadUser={loadUser}
                             onRouteChange={onRouteChange}
                             route={route} 
                         />
                 }
-                
             </div>
         );
     

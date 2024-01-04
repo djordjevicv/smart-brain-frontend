@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import { useState } from "react";
 import './Leaderboard.css'
 import LeaderboardRow from './LeaderboardRow/LeaderboardRow';
+import homeContext from '../../utilities/homeContext';
 
-const LeaderBoard = ({ isModalOpen, changeOpen }) => {
+const LeaderBoard = () => {
+
+    const isModalOpen = useContext(homeContext).isModalOpen;
+    const changeOpen = useContext(homeContext).changeOpen;
 
     const [bestFive, setBestFive] = useState([]);
 
