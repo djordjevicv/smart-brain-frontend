@@ -14,7 +14,7 @@ const LeaderBoard = () => {
     const [bestFive, setBestFive] = useState([]);
 
     const getBestFive = () => {
-        fetch('http://localhost:3001/leaderboard', {
+        fetch('https://smartbrain-backend-jbvx.onrender.com/leaderboard', {
             method: "get",
             headers: { 'Content-Type': 'application/json' },
         })
@@ -44,7 +44,7 @@ const LeaderBoard = () => {
                                       return <LeaderboardRow Rank={i + 1}
                                                 Name={bestFive[i].name}
                                                 Entries={bestFive[i].entries}
-                                                key={crypto.randomUUID()} />
+                                                key={i} />
                                 })}
                             </div>
                         </div>
