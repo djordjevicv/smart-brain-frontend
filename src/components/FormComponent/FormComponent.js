@@ -1,65 +1,70 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 
-
-function FormComponent({ onRouteChange, route, loadUser}) {
-    const [formEmail, setFormEmail] = useState('');
-    const [formPassword, setFormPassword] = useState('');
-    const [formName, setFormName] = useState('');
-
-    const onEmailChange = (event) => {
-        setFormEmail(event.target.value);
+class FormComponent extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            formEmail: '',
+            formPassword: '',
+            formName: ''
+        }
     }
 
-    const onPasswordChange = (event) => {
-       setFormPassword(event.target.value);
+    onEmailChange = (event) => {
+        this.setState({ formEmail: event.target.value });
     }
 
-    const onNameChange = (event) => {
-        setFormName(event.target.value);
+    onPasswordChange = (event) => {
+        this.setState({ formPassword: event.target.value });
     }
 
-    const goToHomePage = (user) => {
-        loadUser(user)
-        onRouteChange('home');
+    onNameChange = (event) => {
+        this.setState({ formName: event.target.value });
+    }
+
+    goToHomePage = (user) => {
+        this.props.loadUser(user)
+        this.props.onRouteChange('home');
         const userJSON = JSON.stringify(user);
         localStorage.setItem('userJSON', userJSON);
     }
 
-    const onSubmit = (route) => {
+    onSubmit = (route) => {
         if (route === 'signin') { // SIGN IN
-            fetch('http://localhost:3001/signin', {
+            fetch('https://smartbrain-backend-jbvx.onrender.com/signin', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    email: formEmail,
-                    password: formPassword
+                    email: this.state.formEmail,
+                    password: this.state.formPassword
                 })
             })
                 .then(response => response.json())
                 .then(user => {
-                    if (user.id)
-                        goToHomePage(user);
-                    else
-                        alert('Invalid form submission!');
+                    if (user.id) this.goToHomePage(user);
+                    else alert('Invalid form submission!');
                 });
         }
         else { // REGISTER
-            fetch('http://localhost:3001/register', {
+            console.log("Im lost at this point")
+            fetch('https://smartbrain-backend-jbvx.onrender.com/register', { 
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    email: formEmail,
-                    password: formPassword,
-                    name: formName
+                    email: this.state.formEmail,
+                    password: this.state.formPassword,
+                    name: this.state.formName
                 })
             })
                 .then(response => response.json())
                 .then(user => {
-                    if (typeof (user) === 'object') goToHomePage(user);
+                    if (typeof (user) === 'object') this.goToHomePage(user);
                     else alert('Invalid form submission!');
                 })
         }
     }
+    render() {
+        const { onRouteChange, route } = this.props;
         return (
             <article className="br3 ba b--black-10 mv4 mw6 shadow-5 center"
                 style={{
@@ -69,7 +74,7 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                     <div className="measure">
                         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                             {
-                                route !== 'signin' ?
+                                route !== 'signin' ? 
                                     <>
                                         <legend className="f1 fw6 ph0 mh0">Register</legend>
                                         <div className="mt3">
@@ -79,10 +84,10 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                                                 type="text"
                                                 name="name"
                                                 id="name"
-                                                onChange={onNameChange}
+                                                onChange={this.onNameChange}
                                             />
                                         </div>
-                                    </>
+                                    </> 
                                     :
                                     <>
                                         <legend className="f1 fw6 ph0 mh0">Sign In</legend>
@@ -95,7 +100,7 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                                     type="email"
                                     name="email-address"
                                     id="email-address"
-                                    onChange={onEmailChange}
+                                    onChange={this.onEmailChange}
                                 />
                             </div>
                             <div className="mv3">
@@ -105,7 +110,7 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                                     type="password"
                                     name="password"
                                     id="password"
-                                    onChange={onPasswordChange}
+                                    onChange={this.onPasswordChange}
                                 />
                             </div>
                         </fieldset>
@@ -113,7 +118,7 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                             {
                                 route !== 'signin' ?
                                     <input
-                                        onClick={() => onSubmit(route)}
+                                        onClick={() => this.onSubmit(this.props.route)}
                                         className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                                         type="submit"
                                         value="Register"
@@ -121,7 +126,7 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                                     :
                                     <>
                                         <input
-                                            onClick={() => onSubmit(route)}
+                                            onClick={() => this.onSubmit(this.props.route)}
                                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                                             type="submit"
                                             value="Sign In"
@@ -129,14 +134,15 @@ function FormComponent({ onRouteChange, route, loadUser}) {
                                         <div className="lh-copy mt3">
                                             <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
                                         </div>
-                                    </>
+                                    </>            
                             }
-
+                            
                         </div>
                     </div>
                 </main>
             </article>
         );
+    }
 }
 
 export default FormComponent;
