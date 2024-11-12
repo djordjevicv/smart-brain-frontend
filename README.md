@@ -4,6 +4,12 @@
 - Developed the REST API and set up the database using Node.js, Express.js and PostgreSQL, as well as including technologies such as Knex.js for connecting the server and the database, as well as Bcrypt for hashing the passwords.
 - Realized the version control using Git.
 
+## Screenshots
+
+![smart-brain - screenshot 1](https://raw.githubusercontent.com/djordjevicv/smart-brain-frontend/refs/heads/screenshots/smart-brain/sb1.png "smart-brain - screenshot 1")
+![smart-brain - screenshot 2](https://raw.githubusercontent.com/djordjevicv/smart-brain-frontend/refs/heads/screenshots/smart-brain/sb2.png "smart-brain - screenshot 2")
+![smart-brain - screenshot 3](https://raw.githubusercontent.com/djordjevicv/smart-brain-frontend/refs/heads/screenshots/smart-brain/sb3.png "smart-brain - screenshot 3")
+
 [Test the app here](https://smartbrain-aspy.onrender.com/) 👈🏻
 
 ### [Back-end code](https://github.com/djordjevicv/smart-brain-backend//) 👈🏻
