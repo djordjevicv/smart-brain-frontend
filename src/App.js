@@ -12,6 +12,7 @@ import Rank from './components/Rank/Rank';
 import FormComponent from './components/FormComponent/FormComponent';
 import './App.css';
 import LeaderBoard from './components/Leaderboard/Leaderboard';
+import homeContext from './utilities/homeContext';
 
 const initialState = {
   route: 'signin',
@@ -27,7 +28,7 @@ const initialState = {
 }
 class App extends Component {
 
-  
+
   constructor() {
     super();
     this.state = initialState;
@@ -39,7 +40,7 @@ class App extends Component {
 
     if (localStorage.getItem('userJSON') === null)
       localStorage.setItem('userJSON', '');
-    
+
     if (localStorage.getItem('userJSON') !== '') {
       const currentUser = JSON.parse(localStorage.getItem('userJSON'));
       this.setState({ user: currentUser });
@@ -77,23 +78,24 @@ class App extends Component {
     if (route === 'signout') {
       this.setState(initialState)
     } else if (route === 'home') {
-      this.setState({isSignedIn: true})
+      this.setState({ isSignedIn: true })
     }
-    this.setState({route: route});
+    this.setState({ route: route });
   }
 
-  
+
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state;
+    const { isSignedIn, route, user, isModalOpen } = this.state;
     return (
       <div className="App">
         <ParticlesBg type="cobweb" color="#ffffff" num={100} bg={true} />
         <Navigation isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
           changeOpen={this.changeOpen} />
-        { route === 'home'
+        {route === 'home'
           ?
-            <div>
+          <div>
+            <homeContext.Provider value={{ user, changeOpen: this.changeOpen, isModalOpen, updateUserCount: this.updateUserCount }}>
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
@@ -101,14 +103,13 @@ class App extends Component {
               <LeaderBoard changeOpen={this.changeOpen}
                 isModalOpen={this.state.isModalOpen}
               />
-              <PictureScanner updateUserCount={this.updateUserCount} 
-                user={this.state.user}
-              />
-            </div>
+              <PictureScanner />
+            </homeContext.Provider>
+          </div>
           :
-            <FormComponent loadUser={this.loadUser}
-              onRouteChange={this.onRouteChange}
-              route={this.state.route} />
+          <FormComponent loadUser={this.loadUser}
+            onRouteChange={this.onRouteChange}
+            route={this.state.route} />
         }
       </div>
     );

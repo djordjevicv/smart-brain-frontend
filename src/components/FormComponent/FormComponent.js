@@ -46,7 +46,6 @@ class FormComponent extends React.Component{
                 });
         }
         else { // REGISTER
-            console.log("Im lost at this point")
             fetch('https://smartbrain-backend-jbvx.onrender.com/register', { 
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
